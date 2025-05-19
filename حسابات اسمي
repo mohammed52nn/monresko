@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حسابات اسمي</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #00b894;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    ul {
+      margin-top: 30px;
+      list-style: none;
+      padding: 0;
+      width: 80%;
+      max-width: 400px;
+    }
+    li {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    .active { background: rgba(0, 255, 0, 0.2); }
+    .deleted { background: rgba(255, 0, 0, 0.2); }
+    .loggedout { background: rgba(255, 165, 0, 0.2); }
+    .searching { font-style: italic; color: #aaa; }
+  </style>
+</head>
+<body>
+  <h1>حسابات اسمي</h1>
+  <p>أدخل بريدك الإلكتروني أو رقم هاتفك للبحث عن الحسابات المرتبطة به</p>
+  <input type="text" id="userInput" placeholder="example@email.com أو 0912345678">
+  <button onclick="searchAccounts()">ابحث الآن</button>
+  <ul id="results"></ul>
+
+  <script>
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function isValidPhone(phone) {
+      return /^0\d{9}$/.test(phone);
+    }
+
+    function searchAccounts() {
+      const input = document.getElementById("userInput").value.trim();
+      const results = document.getElementById("results");
+      results.innerHTML = "";
+
+      if (!input) {
+        results.innerHTML = "<li class='deleted'>الرجاء إدخال بريد إلكتروني أو رقم هاتف صالح.</li>";
+        return;
+      }
+
+      if (!isValidEmail(input) && !isValidPhone(input)) {
+        results.innerHTML = "<li class='deleted'>المدخل غير صحيح. تحقق من الصيغة.</li>";
+        return;
+      }
+
+      const searchingLi = document.createElement("li");
+      searchingLi.className = "searching";
+      searchingLi.textContent = "جاري البحث عن الحسابات المرتبطة...";
+      results.appendChild(searchingLi);
+
+      setTimeout(() => {
+        results.innerHTML = "";
+
+        let accounts = [];
+
+        if (isValidEmail(input)) {
+          accounts = [
+            { name: "جوجل", status: "active" },
+            { name: "فيسبوك", status: "loggedout" },
+            { name: "إنستغرام", status: "active" }
+          ];
+        } else if (isValidPhone(input)) {
+          accounts = [
+            { name: "تيليجرام", status: "active" },
+            { name: "واتساب", status: "deleted" },
+            { name: "تيك توك", status: "loggedout" }
+          ];
+        }
+
+        accounts.forEach(acc => {
+          const li = document.createElement("li");
+          li.className = acc.status;
+          if (acc.status === "active") li.textContent = acc.name + " - نشط";
+          if (acc.status === "deleted") li.textContent = acc.name + " - تم الحذف";
+          if (acc.status === "loggedout") li.textContent = acc.name + " - تسجيل خروج";
+          results.appendChild(li);
+        });
+
+      }, 1500); // محاكاة تأخير البحث
+    }
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حسابات اسمي</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #00b894;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    ul {
+      margin-top: 30px;
+      list-style: none;
+      padding: 0;
+      width: 80%;
+      max-width: 400px;
+    }
+    li {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    .active { background: rgba(0, 255, 0, 0.2); }
+    .deleted { background: rgba(255, 0, 0, 0.2); }
+    .loggedout { background: rgba(255, 165, 0, 0.2); }
+    .searching { font-style: italic; color: #aaa; }
+  </style>
+</head>
+<body>
+  <h1>حسابات اسمي</h1>
+  <p>أدخل بريدك الإلكتروني أو رقم هاتفك للبحث عن الحسابات المرتبطة به</p>
+  <input type="text" id="userInput" placeholder="example@email.com أو 0912345678">
+  <button onclick="searchAccounts()">ابحث الآن</button>
+  <ul id="results"></ul>
+
+  <script>
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function isValidPhone(phone) {
+      return /^0\d{9}$/.test(phone);
+    }
+
+    function searchAccounts() {
+      const input = document.getElementById("userInput").value.trim();
+      const results = document.getElementById("results");
+      results.innerHTML = "";
+
+      if (!input) {
+        results.innerHTML = "<li class='deleted'>الرجاء إدخال بريد إلكتروني أو رقم هاتف صالح.</li>";
+        return;
+      }
+
+      if (!isValidEmail(input) && !isValidPhone(input)) {
+        results.innerHTML = "<li class='deleted'>المدخل غير صحيح. تحقق من الصيغة.</li>";
+        return;
+      }
+
+      const searchingLi = document.createElement("li");
+      searchingLi.className = "searching";
+      searchingLi.textContent = "جاري البحث عن الحسابات المرتبطة...";
+      results.appendChild(searchingLi);
+
+      setTimeout(() => {
+        results.innerHTML = "";
+
+        let accounts = [];
+
+        if (isValidEmail(input)) {
+          accounts = [
+            { name: "جوجل", status: "active" },
+            { name: "فيسبوك", status: "loggedout" },
+            { name: "إنستغرام", status: "active" }
+          ];
+        } else if (isValidPhone(input)) {
+          accounts = [
+            { name: "تيليجرام", status: "active" },
+            { name: "واتساب", status: "deleted" },
+            { name: "تيك توك", status: "loggedout" }
+          ];
+        }
+
+        accounts.forEach(acc => {
+          const li = document.createElement("li");
+          li.className = acc.status;
+          if (acc.status === "active") li.textContent = acc.name + " - نشط";
+          if (acc.status === "deleted") li.textContent = acc.name + " - تم الحذف";
+          if (acc.status === "loggedout") li.textContent = acc.name + " - تسجيل خروج";
+          results.appendChild(li);
+        });
+
+      }, 1500); // محاكاة تأخير البحث
+    }
+  </script>
+</body>
+</html>
